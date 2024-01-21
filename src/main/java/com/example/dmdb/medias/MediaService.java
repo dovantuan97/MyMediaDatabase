@@ -50,9 +50,6 @@ public class MediaService {
         return repo.findAllByMediaType(type);
     }
 
-//    public List<Media> findByStatus(Status status) {
-//        return repo.findAllByStatus(status);
-//    }
 
     public String setImgSource(Media media) {
        return media.getTitle().toLowerCase().replace(" ", "_").replace("'", "");

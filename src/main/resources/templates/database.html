@@ -8,6 +8,12 @@
 <body>
 <h1><a href="/">Dolan's Media Database</a></h1>
 
+<div class="menu">
+    <a th:href="|/|">My list</a>
+    <a th:href="|/medias|">Database</a>
+    <a th:href="|/entries/random|">I don't know what to watch</a>
+</div>
+
 <div class="form">
     <form th:method="post" th:action="|/media/create|">
         <label>
@@ -79,8 +85,8 @@
                 </ul>
             </td>
             <td>
-                <p th:if="${myEntries.contains(media.id)}">On List</p>
-                <a th:unless="${myEntries.contains(media.id)}" th:data-media-id="*{id}" onclick="openForm(this)">Add to list</a>
+                <p th:if="${myEntries.contains(media.id)}">✓ On List</p>
+                <a th:unless="${myEntries.contains(media.id)}" th:data-media-id="*{id}" onclick="openForm(this)">+ Add to list</a>
             </td>
         </tr>
     </table>
@@ -93,7 +99,9 @@
             <label>
                 <select name="status">
                     <option th:each="status : ${statusOptions}"
-                            th:text="${#strings.replace(status.toString(), '_', ' ')}"></option>
+                            th:text="${#strings.replace(status.toString(), '_', ' ')}"
+                            th:value="${status}">
+                    </option>
                 </select>
             </label>
             <label>

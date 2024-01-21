@@ -6,9 +6,13 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<h1>
-    <a href="/">Dolan's Media Database</a>
-</h1>
+<h1><a href="/">Dolan's Media Database</a></h1>
+
+<div class="menu">
+    <a th:href="|/|">My list</a>
+    <a th:href="|/medias|">Database</a>
+    <a th:href="|/entries/random|">I don't know what to watch</a>
+</div>
 
 <h2 th:text="${actor.name}"></h2>
 <img th:src="|/img/actors/${actor.imageSource}.jpg|" th:alt="|${actor.name} img|">
@@ -27,7 +31,7 @@
                 <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
             </td>
             <td>
-                <a th:href="|/media/*{media.id}|" th:text="*{media.title}"></a>
+                <a th:href="|/medias/*{media.id}|" th:text="*{media.title}"></a>
             </td>
             <td th:text="*{media.releaseYear}"></td>
             <td th:text="*{media.mediaType}"></td>

@@ -33,14 +33,6 @@ public class MainController {
     private final UserService userService;
     private final MyEntryService myEntryService;
 
-    @GetMapping("/")
-    public String showMainPage(Model model, Principal principal) {
-        model.addAttribute("entries", getUser(principal).getMyEntries());
-        addOptions(model);
-
-        return "mainPage";
-    }
-
     @PostMapping("/medias/create")
     public String createNewMedia(Media media) {
         mediaService.save(media);
@@ -59,7 +51,7 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterYear/{year}")
-    public String filterYear(@PathVariable Integer year, Model model, Principal principal) {
+    public String filterDatabaseYear(@PathVariable Integer year, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByYear(year));
@@ -69,7 +61,7 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterCountry/{countryOfOrigin}")
-    public String filterCountry(@PathVariable CountryOfOrigin countryOfOrigin, Model model, Principal principal) {
+    public String filterDatabaseCountry(@PathVariable CountryOfOrigin countryOfOrigin, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByCountry(countryOfOrigin));
@@ -79,7 +71,7 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterType/{mediaType}")
-    public String filterType(@PathVariable MediaType mediaType, Model model, Principal principal) {
+    public String filterDatabaseType(@PathVariable MediaType mediaType, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByType(mediaType));
@@ -89,7 +81,7 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterGenre/{genre}")
-    public String filterGenre(@PathVariable Genre genre, Model model, Principal principal) {
+    public String filterDatabaseGenre(@PathVariable Genre genre, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByGenre(genre));
@@ -97,14 +89,6 @@ public class MainController {
 
         return "database";
     }
-
-//    @GetMapping("/media/filterStatus/{status}")
-//    public String filterType(@PathVariable Status status, Model model) {
-//        model.addAttribute("medias", mediaService.findByStatus(status));
-//        addOptions(model);
-//
-//        return "mainPage";
-//    }
 
     @GetMapping("/medias/{mediaId}")
     public String showMediaInfo(@PathVariable Long mediaId, Model model) {
@@ -163,13 +147,6 @@ public class MainController {
         return "actorInfo";
     }
 
-    @PostMapping("/entry/add")
-    public String addToList(Long mediaId, Status status, Principal principal) {
-        myEntryService.addToList(getUser(principal), getMedia(mediaId), status);
-
-        return "redirect:/";
-    }
-
     @GetMapping("/test")
     public String showTestJavaScript() {
         return "testJavaScript";
@@ -183,9 +160,5 @@ public class MainController {
 
     public User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
-    }
-
-    public Media getMedia(Long mediaId) {
-        return mediaService.findById(mediaId).orElseThrow(EntityNotFoundException::new);
     }
 }

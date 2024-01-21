@@ -11,7 +11,7 @@
 <div class="menu">
 <a th:href="|/|">My list</a>
 <a th:href="|/medias|">Database</a>
-<a th:href="|/medias/random|">I don't know what to watch</a>
+<a th:href="|/entries/random|">I don't know what to watch</a>
 </div>
 
 <div th:if="${entries}" class="table">
@@ -29,24 +29,32 @@
                 <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
             </td>
             <td>
-                <a th:href="|/media/*{id}|" th:text="*{media.title}"></a>
+                <a th:href="|/medias/*{media.id}|" th:text="*{media.title}"></a>
             </td>
             <td>
-                <a th:href="|/media/filterYear/*{media.releaseYear}|" th:text="*{media.releaseYear}"></a>
+                <a th:href="|/entries/filterYear/*{media.releaseYear}|" th:text="*{media.releaseYear}"></a>
             </td>
             <td>
                 <ul>
                     <li th:each="country : *{media.countriesOfOrigin}">
-                        <a th:href="|/medias/filterCountry/${country}|"
+                        <a th:href="|/entries/filterCountry/${country}|"
                            th:text="${country}"></a>
                     </li>
                 </ul>
             </td>
             <td>
-                <a th:href="|/media/filterType/*{media.mediaType}|" th:text="*{media.mediaType}"></a>
+                <a th:href="|/entries/filterType/*{media.mediaType}|" th:text="*{media.mediaType}"></a>
             </td>
             <td>
-                <a th:href="|/media/filterStatus/*{status}|" th:text="*{#strings.replace(status.toString(), '_', ' ')}"></a>
+                <ul>
+                    <li th:each="genre : *{media.genres}">
+                        <a th:href="|/medias/filterGenre/${genre}|"
+                           th:text="${#strings.replace(genre.toString(), '_', ' ')}"></a>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="|/entries/filterStatus/*{status}|" th:text="*{#strings.replace(status.toString(), '_', ' ')}"></a>
             </td>
         </tr>
     </table>

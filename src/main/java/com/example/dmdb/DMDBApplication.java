@@ -1,9 +1,6 @@
 package com.example.dmdb;
 
-import com.example.dmdb.enums.CountryOfOrigin;
-import com.example.dmdb.enums.MediaType;
-import com.example.dmdb.enums.RoleType;
-import com.example.dmdb.enums.Status;
+import com.example.dmdb.enums.*;
 import com.example.dmdb.actors.Actor;
 import com.example.dmdb.medias.Media;
 import com.example.dmdb.roles.Role;
@@ -42,6 +39,10 @@ public class DMDBApplication implements CommandLineRunner {
         media1.setTitle("My Name");
         media1.setImageSource("my_name");
         media1.setReleaseYear(2021);
+        media1.getGenres().add(Genre.Action);
+        media1.getGenres().add(Genre.Thriller);
+        media1.getGenres().add(Genre.Mystery);
+        media1.getGenres().add(Genre.Crime);
 
         Media media2 = new Media();
         media2.setMediaType(MediaType.Movie);
@@ -49,6 +50,8 @@ public class DMDBApplication implements CommandLineRunner {
         media2.setImageSource("kimi_no_na_wa");
         media2.getCountriesOfOrigin().add(CountryOfOrigin.JP);
         media2.setReleaseYear(2016);
+        media2.getGenres().add(Genre.Drama);
+        media2.getGenres().add(Genre.Supernatural);
 
         Media media3 = new Media();
         media3.setMediaType(MediaType.Movie);
@@ -57,6 +60,8 @@ public class DMDBApplication implements CommandLineRunner {
         media3.getCountriesOfOrigin().add(CountryOfOrigin.KR);
         media3.getCountriesOfOrigin().add(CountryOfOrigin.US);
         media3.setReleaseYear(2023);
+        media3.getGenres().add(Genre.Romance);
+        media3.getGenres().add(Genre.Drama);
 
         Media media4 = new Media();
         media4.setMediaType(MediaType.Series);
@@ -64,6 +69,10 @@ public class DMDBApplication implements CommandLineRunner {
         media4.setImageSource("my_demon");
         media4.getCountriesOfOrigin().add(CountryOfOrigin.KR);
         media4.setReleaseYear(2023);
+        media4.getGenres().add(Genre.Action);
+        media4.getGenres().add(Genre.Comedy);
+        media4.getGenres().add(Genre.Romance);
+        media4.getGenres().add(Genre.Supernatural);
 
         Media media5 = new Media();
         media5.setMediaType(MediaType.Series);
@@ -71,6 +80,11 @@ public class DMDBApplication implements CommandLineRunner {
         media5.setImageSource("love_to_hate_you");
         media5.getCountriesOfOrigin().add(CountryOfOrigin.KR);
         media5.setReleaseYear(2023);
+        media5.getGenres().add(Genre.Comedy);
+        media5.getGenres().add(Genre.Romance);
+        media5.getGenres().add(Genre.Legal);
+
+
 
         Media media6 = new Media();
         media6.setMediaType(MediaType.Series);
@@ -78,6 +92,9 @@ public class DMDBApplication implements CommandLineRunner {
         media6.setImageSource("nevertheless,");
         media6.getCountriesOfOrigin().add(CountryOfOrigin.KR);
         media6.setReleaseYear(2021);
+        media6.getGenres().add(Genre.Romance);
+        media6.getGenres().add(Genre.Slice_of_Life);
+        media6.getGenres().add(Genre.Drama);
 
         mediaRepo.save(media1);
         mediaRepo.save(media2);

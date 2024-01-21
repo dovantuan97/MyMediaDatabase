@@ -1,8 +1,8 @@
 package com.example.dmdb.medias;
 
 import com.example.dmdb.enums.CountryOfOrigin;
+import com.example.dmdb.enums.Genre;
 import com.example.dmdb.enums.MediaType;
-import com.example.dmdb.enums.Status;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,5 +56,9 @@ public class MediaService {
 
     public String setImgSource(Media media) {
        return media.getTitle().toLowerCase().replace(" ", "_").replace("'", "");
+    }
+
+    public List<Media> findByGenre(Genre genre) {
+        return repo.findAllByGenresContains(genre);
     }
 }

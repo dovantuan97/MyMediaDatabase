@@ -1,10 +1,7 @@
 package com.example.dmdb.controllers;
 
 import com.example.dmdb.actors.Actor;
-import com.example.dmdb.enums.CountryOfOrigin;
-import com.example.dmdb.enums.MediaType;
-import com.example.dmdb.enums.RoleType;
-import com.example.dmdb.enums.Status;
+import com.example.dmdb.enums.*;
 import com.example.dmdb.medias.Media;
 import com.example.dmdb.actors.ActorService;
 import com.example.dmdb.medias.MediaService;
@@ -61,7 +58,7 @@ public class MainController {
         model.addAttribute("medias", mediaService.findByYear(year));
         addOptions(model);
 
-        return "mainPage";
+        return "database";
     }
 
     @GetMapping("/medias/filterCountry/{countryOfOrigin}")
@@ -69,7 +66,7 @@ public class MainController {
         model.addAttribute("medias", mediaService.findByCountry(countryOfOrigin));
         addOptions(model);
 
-        return "mainPage";
+        return "database";
     }
 
     @GetMapping("/medias/filterType/{mediaType}")
@@ -77,7 +74,15 @@ public class MainController {
         model.addAttribute("medias", mediaService.findByType(mediaType));
         addOptions(model);
 
-        return "mainPage";
+        return "database";
+    }
+
+    @GetMapping("/medias/filterGenre/{genre}")
+    public String filterGenre(@PathVariable Genre genre, Model model) {
+        model.addAttribute("medias", mediaService.findByGenre(genre));
+        addOptions(model);
+
+        return "database";
     }
 
 //    @GetMapping("/media/filterStatus/{status}")

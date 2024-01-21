@@ -25,6 +25,11 @@ a {
 
 a:hover {
     color: #4d94ff;
+    cursor: pointer;
+}
+
+p {
+    color: #66b2ff;
 }
 
 .form {
@@ -112,6 +117,27 @@ th {
     font-family: monospace;
     font-size: 3rem;
     font-weight: bold;
+}
+
+.windowForm {
+    position: fixed;
+    top: 10rem;
+    bottom: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+    opacity: 0;
+    background-color: #601616;
+    margin-left: 30rem;
+    margin-right: 30rem;
+    width: 50%;
+    height: 15rem;
+}
+
+.windowForm.open {
+    opacity: 1;
+    z-index: 999;
 }
 
 @media only screen and (max-width: 37.5rem) {

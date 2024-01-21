@@ -6,14 +6,15 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<h1><a href="/">Dolan's Media Database</a></h1>
+<h1><a href="/">My List</a></h1>
 
 <div class="menu">
 <a th:href="|/|">My list</a>
 <a th:href="|/medias|">Database</a>
+<a th:href="|/medias/random|">I don't know what to watch</a>
 </div>
 
-<div th:if="${medias}" class="table">
+<div th:if="${entries}" class="table">
     <table>
         <tr>
             <th></th>
@@ -23,24 +24,29 @@
             <th>TYPE</th>
             <th>STATUS</th>
         </tr>
-        <tr th:each="media : ${medias}" th:object="${media}">
+        <tr th:each="entry : ${entries}" th:object="${entry}">
             <td>
-                <img th:src="|/img/medias/*{imageSource}.jpg|" th:alt="|*{title} img|">
+                <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
             </td>
             <td>
-                <a th:href="|/media/*{id}|" th:text="*{title}"></a>
+                <a th:href="|/media/*{id}|" th:text="*{media.title}"></a>
             </td>
             <td>
-                <a th:href="|/media/filterYear/*{releaseYear}|" th:text="*{releaseYear}"></a>
+                <a th:href="|/media/filterYear/*{media.releaseYear}|" th:text="*{media.releaseYear}"></a>
             </td>
             <td>
-                <a th:href="|/media/filterCountry/*{countryOfOrigin}|" th:text="*{countryOfOrigin}"></a>
+                <ul>
+                    <li th:each="country : *{media.countriesOfOrigin}">
+                        <a th:href="|/medias/filterCountry/${country}|"
+                           th:text="${country}"></a>
+                    </li>
+                </ul>
             </td>
             <td>
-                <a th:href="|/media/filterType/*{mediaType}|" th:text="*{mediaType}"></a>
+                <a th:href="|/media/filterType/*{media.mediaType}|" th:text="*{media.mediaType}"></a>
             </td>
             <td>
-                <a th:href="|/media/filterStatus/*{status}|" th:text="${#strings.replace(media.status.toString(), '_', ' ')}"></a>
+                <a th:href="|/media/filterStatus/*{status}|" th:text="*{#strings.replace(status.toString(), '_', ' ')}"></a>
             </td>
         </tr>
     </table>

@@ -1,4 +1,4 @@
-package com.example.dmdb.mymedias;
+package com.example.dmdb.my_entries;
 
 import com.example.dmdb.enums.Status;
 import com.example.dmdb.medias.Media;
@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class MyMedia {
+public class MyEntry {
 
     @Id
     @GeneratedValue
@@ -30,4 +30,10 @@ public class MyMedia {
     private Status status;
     private LocalDate dateStarted;
     private LocalDate dateFinished;
+
+    public MyEntry(User user, Media media, Status status) {
+        this.user = user;
+        this.media = media;
+        this.status = status;
+    }
 }

@@ -5,6 +5,7 @@ import com.example.dmdb.enums.*;
 import com.example.dmdb.medias.Media;
 import com.example.dmdb.actors.ActorService;
 import com.example.dmdb.medias.MediaService;
+import com.example.dmdb.my_entries.MyEntryService;
 import com.example.dmdb.roles.Role;
 import com.example.dmdb.roles.RoleService;
 import com.example.dmdb.users.User;
@@ -30,11 +31,11 @@ public class MainController {
     private final MediaService mediaService;
     private final RoleService roleService;
     private final UserService userService;
-
+    private final MyEntryService myEntryService;
 
     @GetMapping("/")
     public String showMainPage(Model model, Principal principal) {
-        model.addAttribute("user", getUser(principal));
+        model.addAttribute("entries", getUser(principal).getMyEntries());
         addOptions(model);
 
         return "mainPage";
@@ -48,7 +49,9 @@ public class MainController {
     }
 
     @GetMapping("/medias")
-    public String showDatabase(Model model) {
+    public String showDatabase(Model model, Principal principal) {
+        List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+        model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findAll());
         addOptions(model);
 
@@ -56,7 +59,9 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterYear/{year}")
-    public String filterYear(@PathVariable Integer year, Model model) {
+    public String filterYear(@PathVariable Integer year, Model model, Principal principal) {
+        List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+        model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByYear(year));
         addOptions(model);
 
@@ -64,7 +69,9 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterCountry/{countryOfOrigin}")
-    public String filterCountry(@PathVariable CountryOfOrigin countryOfOrigin, Model model) {
+    public String filterCountry(@PathVariable CountryOfOrigin countryOfOrigin, Model model, Principal principal) {
+        List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+        model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByCountry(countryOfOrigin));
         addOptions(model);
 
@@ -72,7 +79,9 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterType/{mediaType}")
-    public String filterType(@PathVariable MediaType mediaType, Model model) {
+    public String filterType(@PathVariable MediaType mediaType, Model model, Principal principal) {
+        List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+        model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByType(mediaType));
         addOptions(model);
 
@@ -80,7 +89,9 @@ public class MainController {
     }
 
     @GetMapping("/medias/filterGenre/{genre}")
-    public String filterGenre(@PathVariable Genre genre, Model model) {
+    public String filterGenre(@PathVariable Genre genre, Model model, Principal principal) {
+        List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+        model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByGenre(genre));
         addOptions(model);
 
@@ -152,6 +163,13 @@ public class MainController {
         return "actorInfo";
     }
 
+    @PostMapping("/entry/add")
+    public String addToList(Long mediaId, Status status, Principal principal) {
+        myEntryService.addToList(getUser(principal), getMedia(mediaId), status);
+
+        return "redirect:/";
+    }
+
     @GetMapping("/test")
     public String showTestJavaScript() {
         return "testJavaScript";
@@ -165,5 +183,9 @@ public class MainController {
 
     public User getUser(Principal principal) {
         return userService.findByUsername(principal.getName()).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Media getMedia(Long mediaId) {
+        return mediaService.findById(mediaId).orElseThrow(EntityNotFoundException::new);
     }
 }

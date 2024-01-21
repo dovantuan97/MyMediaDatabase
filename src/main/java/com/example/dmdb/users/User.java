@@ -1,7 +1,6 @@
 package com.example.dmdb.users;
 
-import com.example.dmdb.medias.Media;
-import com.example.dmdb.mymedias.MyMedia;
+import com.example.dmdb.my_entries.MyEntry;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class User {
     private String username;
     private String password;
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
-    private List<MyMedia> myMedias;
+    private List<MyEntry> myEntries;
 
     public User(String username, String password) {
         this.username = username;

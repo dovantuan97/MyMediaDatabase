@@ -34,12 +34,6 @@
                 </script>
             </select>
         </label>
-        <label>
-            <select name="status">
-                <option th:each="status : ${statusOptions}"
-                        th:text="${#strings.replace(status.toString(), '_', ' ')}"></option>
-            </select>
-        </label>
         <button>submit</button>
     </form>
 </div>
@@ -53,6 +47,7 @@
             <th>COUNTRY OF ORIGIN</th>
             <th>TYPE</th>
             <th>GENRES</th>
+            <th></th>
         </tr>
         <tr th:each="media : ${medias}" th:object="${media}">
             <td>
@@ -83,9 +78,55 @@
                     </li>
                 </ul>
             </td>
+            <td>
+                <p th:if="${myEntries.contains(media.id)}">On List</p>
+                <a th:unless="${myEntries.contains(media.id)}" th:data-media-id="*{id}" onclick="openForm(this)">Add to list</a>
+            </td>
         </tr>
     </table>
 </div>
 
+<div class="windowForm" id="windowForm">
+    <div class="inner-window"></div>
+        <h2>Add to list</h2>
+        <form th:method="post" th:action="|/entry/add|" id="addToList">
+            <label>
+                <select name="status">
+                    <option th:each="status : ${statusOptions}"
+                            th:text="${#strings.replace(status.toString(), '_', ' ')}"></option>
+                </select>
+            </label>
+            <label>
+                input
+            </label>
+            <button>Add</button>
+            <button type="button" onclick="closeForm()">Cancel</button>
+        </form>
+</div>
+<script>
+    const windowForm = document.querySelector(".windowForm")
+    const form = document.querySelector("#addToList");
+    function openForm(anchor) {
+        let mediaId = anchor.getAttribute("data-media-id");
+        let input = document.createElement("input");
+
+        input.type = "hidden";
+        input.name = "mediaId";
+        input.value = mediaId;
+
+        windowForm.classList.add("open")
+        form.appendChild(input)
+    }
+
+    function closeForm() {
+        let hiddenInput = form.querySelector('input[name="mediaId"]');
+
+        if (hiddenInput) {
+            form.removeChild(hiddenInput);
+        }
+
+        windowForm.classList.remove("open")
+    }
+</script>
 </body>
 </html>

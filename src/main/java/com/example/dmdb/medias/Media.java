@@ -3,7 +3,7 @@ package com.example.dmdb.medias;
 import com.example.dmdb.enums.CountryOfOrigin;
 import com.example.dmdb.enums.Genre;
 import com.example.dmdb.enums.MediaType;
-import com.example.dmdb.mymedias.MyMedia;
+import com.example.dmdb.my_entries.MyEntry;
 import com.example.dmdb.roles.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -36,5 +36,5 @@ public class Media {
     private List<Role> roles;
     private String imageSource;
     @OneToMany (mappedBy = "media", cascade = CascadeType.ALL)
-    private List<MyMedia> myMedia;
+    private List<MyEntry> myEntry;
 }

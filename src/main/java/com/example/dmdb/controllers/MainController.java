@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -95,13 +97,19 @@ public class MainController {
 
     @GetMapping("/medias/{mediaId}")
     public String showMediaInfo(@PathVariable Long mediaId, Model model) {
-        Optional<Media> temp = mediaService.findById(mediaId);
-        if(temp.isEmpty()) {
+        Optional<Media> optMedia = mediaService.findById(mediaId);
+        if(optMedia.isEmpty()) {
            throw new RuntimeException("Media not found");
         }
         else {
-            model.addAttribute("media", temp.get());
-            model.addAttribute("roles", RoleType.values());
+            Media media = optMedia.get();
+            List<Role> roles = media.getRoles().stream()
+                    .sorted(Comparator.comparing(Role::getRoleType)
+                            .thenComparing(r -> r.getActor().getName()))
+                            .toList();
+            model.addAttribute("media", media);
+            model.addAttribute("roles", roles);
+            model.addAttribute("roleTypes", RoleType.values());
         }
 
         return "mediaInfo";
@@ -126,7 +134,7 @@ public class MainController {
         }
         roleService.save(role);
 
-        return "redirect:/media/" + mediaId;
+        return "redirect:/medias/" + mediaId;
     }
 
     @GetMapping("/actors/{actorId}")

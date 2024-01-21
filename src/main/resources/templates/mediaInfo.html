@@ -11,7 +11,7 @@
 <img th:src="|/img/medias/${media.imageSource}.jpg|" th:alt="|${media.title} img|">
 
 <div class="form">
-    <form th:method="post">
+    <form th:method="post" th:action="|/medias/${media.id}|">
         <label>
             Name:
             <input type="text" name="name">
@@ -19,7 +19,7 @@
         <label>
             Role:
             <select name="roleType">
-                <option th:each="role : ${roles}" th:text="${role}"></option>
+                <option th:each="role : ${roleTypes}" th:text="${role}"></option>
             </select>
         </label>
         <label>
@@ -37,7 +37,7 @@
             <th>Role</th>
             <th></th>
         </tr>
-        <tr th:each="role : ${media.roles}" th:object="${role}">
+        <tr th:each="role : ${roles}" th:object="${role}">
             <td>
                 <img th:src="|/img/actors/*{actor.imageSource}.jpg|" th:alt="|*{actor.name} img|">
             </td>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${actor.name}"></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1>
+    <a href="/">Dolan's Media Database</a>
+</h1>
+
+<h2 th:text="${actor.name}"></h2>
+<img th:src="|/img/actors/${actor.imageSource}.jpg|" th:alt="|${actor.name} img|">
+
+<div class="table">
+    <table>
+        <tr>
+            <th></th>
+            <th>TITLE</th>
+            <th>YEAR</th>
+            <th>TYPE</th>
+            <th>ROLE</th>
+        </tr>
+        <tr th:each="role : ${actor.roles}" th:object="${role}">
+            <td>
+                <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
+            </td>
+            <td>
+                <a th:href="|/media/*{media.id}|" th:text="*{media.title}"></a>
+            </td>
+            <td th:text="*{media.releaseYear}"></td>
+            <td th:text="*{media.mediaType}"></td>
+            <td th:text="*{roleType}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DMDB</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1><a href="/">Dolan's Media Database</a></h1>
+
+<div class="form">
+  <form th:method="post" th:action="|/media/create|">
+    <label>
+      Title:
+      <input name="title" type="text" required>
+    </label>
+    <label>
+      <select name="mediaType">
+        <option th:each="type : ${mediaTypeOptions}" th:text="${type}"></option>
+      </select>
+    </label>
+    <label>
+      <select name="countryOfOrigin">
+        <option th:each="country : ${countryOfOriginOptions}" th:text="${country}"></option>
+      </select>
+    </label>
+    <label>
+      <select name="releaseYear">
+        <script>
+          let currentYear = new Date().getFullYear();
+          for (let year = currentYear; year >= 1930; year--) {
+            document.write(`<option value='${year}'>${year}</option>`);
+          }
+        </script>
+      </select>
+    </label>
+    <label>
+      <select name="status">
+        <option th:each="status : ${statusOptions}" th:text="${#strings.replace(status.toString(), '_', ' ')}"></option>
+      </select>
+    </label>
+    <button>submit</button>
+  </form>
+</div>
+
+<div th:if="${medias}" class="table">
+  <table>
+    <tr>
+      <th></th>
+      <th>TITLE</th>
+      <th>YEAR</th>
+      <th>COUNTRY OF ORIGIN</th>
+      <th>TYPE</th>
+      <th>STATUS</th>
+    </tr>
+    <tr th:each="media : ${medias}" th:object="${media}">
+      <td>
+        <img th:src="|/img/medias/*{imageSource}.jpg|" th:alt="|*{title} img|">
+      </td>
+      <td>
+        <a th:href="|/medias/*{id}|" th:text="*{title}"></a>
+      </td>
+      <td>
+        <a th:href="|/medias/filterYear/*{releaseYear}|" th:text="*{releaseYear}"></a>
+      </td>
+      <td>
+        <ul>
+          <li th:each="country : *{countriesOfOrigin}"><a th:href="|/media/filterCountry/${country}|" th:text="${country}"></a></li>
+        </ul>
+      </td>
+      <td>
+        <a th:href="|/s/filterType/*{mediaType}|" th:text="*{mediaType}"></a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

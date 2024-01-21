@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<p th:if="${userExists} == true">User exist</p>
+<form th:method="post" th:action="|/register|">
+    <label>
+        <input type="text" name="username">
+    </label>
+    <label>
+        <input type="password" name="password">
+    </label>
+    <button>Sign Up</button>
+</form>
+</body>
+</html>

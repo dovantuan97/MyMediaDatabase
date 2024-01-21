@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DMDB</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1><a href="/">Dolan's Media Database</a></h1>
+
+<div class="menu">
+<a th:href="|/|">My list</a>
+<a th:href="|/medias|">Database</a>
+</div>
+
+<div th:if="${medias}" class="table">
+    <table>
+        <tr>
+            <th></th>
+            <th>TITLE</th>
+            <th>YEAR</th>
+            <th>COUNTRY OF ORIGIN</th>
+            <th>TYPE</th>
+            <th>STATUS</th>
+        </tr>
+        <tr th:each="media : ${medias}" th:object="${media}">
+            <td>
+                <img th:src="|/img/medias/*{imageSource}.jpg|" th:alt="|*{title} img|">
+            </td>
+            <td>
+                <a th:href="|/media/*{id}|" th:text="*{title}"></a>
+            </td>
+            <td>
+                <a th:href="|/media/filterYear/*{releaseYear}|" th:text="*{releaseYear}"></a>
+            </td>
+            <td>
+                <a th:href="|/media/filterCountry/*{countryOfOrigin}|" th:text="*{countryOfOrigin}"></a>
+            </td>
+            <td>
+                <a th:href="|/media/filterType/*{mediaType}|" th:text="*{mediaType}"></a>
+            </td>
+            <td>
+                <a th:href="|/media/filterStatus/*{status}|" th:text="${#strings.replace(media.status.toString(), '_', ' ')}"></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

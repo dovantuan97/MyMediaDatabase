@@ -15,7 +15,7 @@
 </div>
 
 <div class="form">
-    <form th:method="post" th:action="|/media/create|">
+    <form th:method="post" th:action="|/medias/create|">
         <label>
             Title:
             <input name="title" type="text" required>
@@ -26,7 +26,7 @@
             </select>
         </label>
         <label>
-            <select name="countryOfOrigin">
+            <select name="countriesOfOrigin">
                 <option th:each="country : ${countryOfOriginOptions}" th:text="${country}"></option>
             </select>
         </label>
@@ -49,8 +49,9 @@
         <tr>
             <th></th>
             <th>TITLE</th>
+            <th>SCORE</th>
             <th>YEAR</th>
-            <th>COUNTRY OF ORIGIN</th>
+            <th>COUNTRY/IES OF ORIGIN</th>
             <th>TYPE</th>
             <th>GENRES</th>
             <th></th>
@@ -61,6 +62,10 @@
             </td>
             <td>
                 <a th:href="|/medias/*{id}|" th:text="*{title}"></a>
+            </td>
+            <td>
+                <p th:unless="*{getRating() == 0.0}" th:text="*{getRating()}"></p>
+                <p th:if="*{getRating() == 0.0}">N/a</p>
             </td>
             <td>
                 <a th:href="|/medias/filterYear/*{releaseYear}|" th:text="*{releaseYear}"></a>
@@ -86,48 +91,74 @@
             </td>
             <td>
                 <p th:if="${myEntries.contains(media.id)}">✓ On List</p>
-                <a th:unless="${myEntries.contains(media.id)}" th:data-media-id="*{id}" onclick="openForm(this)">+ Add to list</a>
+                <a th:unless="${myEntries.contains(media.id)}" th:data-media-id="*{id}"
+                   th:data-image-source="*{imageSource}" onclick="openForm(this)">+ Add
+                    to list</a>
             </td>
         </tr>
     </table>
 </div>
 
-<div class="windowForm" id="windowForm">
-    <div class="inner-window"></div>
-        <h2>Add to list</h2>
-        <form th:method="post" th:action="|/entry/add|" id="addToList">
-            <label>
-                <select name="status">
-                    <option th:each="status : ${statusOptions}"
-                            th:text="${#strings.replace(status.toString(), '_', ' ')}"
-                            th:value="${status}">
-                    </option>
-                </select>
-            </label>
-            <button>Add</button>
-            <button type="button" onclick="closeForm()" id="cancel">Cancel</button>
-        </form>
+<div class="addToListPopUp" id="addToListPopUp">
+    <h2>Add to list</h2>
+    <div class="addToListContent">
+        <div class="addToListImage">
+        </div>
+
+        <div class="addToListForm">
+            <form th:method="post" th:action="|/entry/add|" id="addToListForm">
+                <div class="inputs">
+                    <label>
+                        <select name="status">
+                            <option th:each="status : ${statusOptions}"
+                                    th:text="${#strings.replace(status.toString(), '_', ' ')}"
+                                    th:value="${status}">
+                            </option>
+                        </select>
+                    </label>
+                    <label>
+                        <input type="range" step="0.5" max="10" value="0" name="rating">
+                    </label>
+                </div>
+
+                <div class="buttons">
+                    <button>Add</button>
+                    <button type="button" onclick="closeForm()" id="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
-    const windowForm = document.querySelector(".windowForm")
-    const form = document.querySelector("#addToList");
+    const windowForm = document.querySelector(".addToListPopUp")
+    const form = document.querySelector("#addToListForm");
+    const imageDiv = document.querySelector(".addToListImage")
+
     function openForm(anchor) {
         let mediaId = anchor.getAttribute("data-media-id");
         let input = document.createElement("input");
+        let imageSource = anchor.getAttribute("data-image-source")
+        let image = document.createElement("img");
 
         input.type = "hidden";
         input.name = "mediaId";
         input.value = mediaId;
 
-        windowForm.classList.add("open")
-        form.appendChild(input)
+        image.src = "/img/medias/" + imageSource + ".jpg";
+        image.alt = "Media art";
+
+        windowForm.classList.add("open");
+        form.appendChild(input);
+        imageDiv.appendChild(image);
     }
 
     function closeForm() {
-        let hiddenInput = form.querySelector('input[name="mediaId"]');
+        let inputToRemove = form.querySelector('input[name="mediaId"]');
+        let imageToRemove = imageDiv.querySelector('img');
 
-        if (hiddenInput) {
-            form.removeChild(hiddenInput);
+        if (inputToRemove) {
+            form.removeChild(inputToRemove);
+            imageDiv.removeChild(imageToRemove);
         }
 
         windowForm.classList.remove("open")

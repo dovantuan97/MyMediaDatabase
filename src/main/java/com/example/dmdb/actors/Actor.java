@@ -18,9 +18,9 @@ public class Actor {
     @GeneratedValue
     private Long id;
     private String name;
+    private String imageSource;
     @OneToMany (cascade = CascadeType.ALL, mappedBy = "actor")
     private List<Role> roles;
-    private String imageSource;
 
     public Actor(String name) {
         this.name = name;

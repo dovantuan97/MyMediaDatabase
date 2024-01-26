@@ -22,18 +22,23 @@ public class MyEntry {
     @Id
     @GeneratedValue
     private Long id;
+    private Float rating;
+    private Status status;
+    private LocalDate dateStarted;
+    private LocalDate dateFinished;
     @ManyToOne
     private User user;
     @ManyToOne
     private Media media;
-    private Integer Rating;
-    private Status status;
-    private LocalDate dateStarted;
-    private LocalDate dateFinished;
 
-    public MyEntry(User user, Media media, Status status) {
+    public MyEntry(User user, Media media, Status status, Float rating) {
         this.user = user;
         this.media = media;
         this.status = status;
+        if (status == Status.Plan_to_Watch || status == Status.Currently_Watching) {
+            this.rating = null;
+        } else {
+            this.rating = rating;
+        }
     }
 }

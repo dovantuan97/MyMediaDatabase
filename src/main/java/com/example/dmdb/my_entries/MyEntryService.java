@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
+
 
 @Service
 @RequiredArgsConstructor
@@ -49,18 +49,9 @@ public class MyEntryService {
                 .toList();
     }
 
-    public void addToList(User user, Media media, Status status) {
-        MyEntry entry = new MyEntry(user, media, status);
+    public void addToList(User user, Media media, Status status, Float rating) {
+        MyEntry entry = new MyEntry(user, media, status, rating);
         repo.save(entry);
-    }
-
-    public Long getRandomEntry(User user) {
-        List<Long> mediaIds = repo.findAllByUserIdAndStatus(user.getId(), Status.Plan_to_Watch).stream()
-                .map(e -> e.getMedia().getId())
-                .toList();
-        Random random = new Random();
-
-        return mediaIds.get(random.nextInt(mediaIds.size()));
     }
 
     public List<MyEntry> findByUserIdAndStatus(User user, Status status) {

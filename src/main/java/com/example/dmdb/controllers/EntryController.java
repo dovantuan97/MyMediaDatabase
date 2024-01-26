@@ -23,7 +23,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class EntryController {
 
-    private final MyEntryService myEntryService;
+    private final MyEntryService entryService;
     private final UserService userService;
     private final MediaService mediaService;
 
@@ -36,47 +36,47 @@ public class EntryController {
 
     @GetMapping("/entries/random")
     public String getRandom(Principal principal) {
-        return "redirect:/medias/" + myEntryService.getRandomEntry(getUser(principal));
+        return "redirect:/medias/" + mediaService.getRandomMedia(getUser(principal));
     }
 
     @PostMapping("/entry/add")
-    public String addToList(Long mediaId, Status status, Principal principal) {
-        myEntryService.addToList(getUser(principal), getMedia(mediaId), status);
+    public String addToList(Principal principal, Long mediaId, Status status, Float rating) {
+        entryService.addToList(getUser(principal), getMedia(mediaId), status, rating);
 
         return "redirect:/medias";
     }
 
     @GetMapping("/entries/filterYear/{year}")
     public String filterEntryYear(@PathVariable Integer year, Model model, Principal principal) {
-        model.addAttribute("entries", myEntryService.findAllByReleaseYear(getUser(principal), year));
+        model.addAttribute("entries", entryService.findAllByReleaseYear(getUser(principal), year));
 
         return "mainPage";
     }
 
     @GetMapping("/entries/filterCountry/{countryOfOrigin}")
     public String filterEntryCountry(@PathVariable CountryOfOrigin countryOfOrigin, Model model, Principal principal) {
-        model.addAttribute("entries", myEntryService.findAllByCountryOfOrigin(getUser(principal), countryOfOrigin));
+        model.addAttribute("entries", entryService.findAllByCountryOfOrigin(getUser(principal), countryOfOrigin));
 
         return "mainPage";
     }
 
     @GetMapping("/entries/filterType/{mediaType}")
     public String filterEntryType(@PathVariable MediaType mediaType, Model model, Principal principal) {
-        model.addAttribute("entries", myEntryService.findAllByMediaType(getUser(principal), mediaType));
+        model.addAttribute("entries", entryService.findAllByMediaType(getUser(principal), mediaType));
 
         return "mainPage";
     }
 
     @GetMapping("/entries/filterGenre/{genre}")
     public String filterEntryGenre(@PathVariable Genre genre, Model model, Principal principal) {
-        model.addAttribute("entries", myEntryService.findByUserIdAndGenre(getUser(principal), genre));
+        model.addAttribute("entries", entryService.findByUserIdAndGenre(getUser(principal), genre));
 
         return "mainPage";
     }
 
     @GetMapping("/entries/filterStatus/{status}")
     public String filterEntryType(@PathVariable Status status, Model model, Principal principal) {
-        model.addAttribute("entries", myEntryService.findByUserIdAndStatus(getUser(principal), status));
+        model.addAttribute("entries", entryService.findByUserIdAndStatus(getUser(principal), status));
 
         return "mainPage";
     }

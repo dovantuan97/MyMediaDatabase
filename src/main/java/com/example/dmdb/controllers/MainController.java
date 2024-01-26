@@ -37,7 +37,7 @@ public class MainController {
     public String createNewMedia(Media media) {
         mediaService.save(media);
 
-        return "redirect:/";
+        return "redirect:/medias";
     }
 
     @GetMapping("/medias")

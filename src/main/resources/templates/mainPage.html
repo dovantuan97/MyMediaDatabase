@@ -14,7 +14,7 @@
 <a th:href="|/entries/random|">I don't know what to watch</a>
 </div>
 
-<div th:if="${entries}" class="table">
+<div class="table">
     <table>
         <tr>
             <th></th>
@@ -25,7 +25,7 @@
             <th>GENRE</th>
             <th>STATUS</th>
         </tr>
-        <tr th:each="entry : ${entries}" th:object="${entry}">
+        <tr th:if="${not #lists.isEmpty(entries)}" th:each="entry : ${entries}" th:object="${entry}">
             <td>
                 <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
             </td>
@@ -59,7 +59,7 @@
             </td>
         </tr>
     </table>
+    <p th:if="${#lists.isEmpty(entries)}" id="empty">Wow, so empty!</p>
 </div>
-
 </body>
 </html>

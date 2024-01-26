@@ -24,17 +24,27 @@ public class Media {
     private Long id;
     private String title;
     private Integer releaseYear;
+    private MediaType mediaType;
+    private String synopsis;
+    private String imageSource;
     @ElementCollection(targetClass = CountryOfOrigin.class)
     @Enumerated(EnumType.STRING)
     private List<CountryOfOrigin> countriesOfOrigin = new ArrayList<>();
-    private MediaType mediaType;
     @ElementCollection(targetClass = Genre.class)
     @Enumerated(EnumType.STRING)
     private List<Genre> genres = new ArrayList<>();
-    private String synopsis;
     @OneToMany (mappedBy = "media", cascade = CascadeType.ALL)
     private List<Role> roles;
-    private String imageSource;
     @OneToMany (mappedBy = "media", cascade = CascadeType.ALL)
-    private List<MyEntry> myEntry;
+    private List<MyEntry> myEntries;
+
+    public float getRating() {
+        double avg = myEntries.stream()
+                .filter(mE -> mE.getRating() != null)
+                .mapToDouble(MyEntry::getRating)
+                .average()
+                .orElse(0.0);
+
+        return (float) (Math.round(avg * 100.0) / 100.0);
+    }
 }

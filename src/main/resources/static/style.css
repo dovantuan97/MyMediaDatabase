@@ -41,7 +41,7 @@ p {
     box-shadow: 0 0 0.63rem rgba(0, 0, 0, 0.2);
 }
 
-.form select, input {
+select, input {
     padding: 0.5rem;
 }
 
@@ -68,6 +68,7 @@ table {
     margin-top: 1.25rem;
     background-color: #333;
     color: #fff;
+    border-radius: 0.3rem;
 }
 
 .table img {
@@ -119,33 +120,40 @@ th {
     font-weight: bold;
 }
 
-.windowForm {
+.addToListPopUp {
     position: fixed;
+    display: block;
     top: 10rem;
     bottom: 10rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: -1;
     opacity: 0;
     background-color: #333333;
-    margin-left: 30rem;
-    margin-right: 30rem;
-    width: 50%;
-    height: 15rem;
+    margin-inline: 30rem;
+    width: 40%;
+    height: 20rem;
     border: 1px solid #292b2c;
+    border-radius: 0.3rem;
 }
 
-.windowForm.open {
+.addToListPopUp h2 {
+    text-align: center;
+}
+
+.addToListPopUp.open {
     opacity: 1;
     z-index: 999;
 }
 
-.windowForm select {
+.addToListContent {
+    display: flex;
+    flex-direction: row;
+}
+
+.addToListContent select {
     padding: 0.5rem;
 }
 
-.windowForm button {
+.addToListContent button {
     background-color: #007BFF;
     color: #fff;
     border: none;
@@ -154,9 +162,32 @@ th {
     border-radius: 0.3rem;
 }
 
-#cancel {
+.addToListImage img {
+    margin-inline: 2rem;
+    height: 15rem;
+    width: auto;
+}
+
+.addToListPopUp #cancel {
     background-color: #e9e9ed;
     color: black;
+}
+
+#empty {
+    color: #fff;
+    margin-block: 10rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+#inputs {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
 }
 
 @media only screen and (max-width: 37.5rem) {

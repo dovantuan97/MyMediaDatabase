@@ -55,7 +55,10 @@ public class MediaService {
 
 
     public String setImgSource(Media media) {
-       return media.getTitle().toLowerCase().replace(" ", "_").replace("'", "");
+       return media.getTitle()
+               .toLowerCase()
+               .replace(" ", "_")
+               .replace("'", "");
     }
 
     public List<Media> findByGenre(Genre genre) {

@@ -43,7 +43,7 @@ public class Media {
                 .filter(mE -> mE.getRating() != null)
                 .mapToDouble(MyEntry::getRating)
                 .average()
-                .orElse(0.0);
+                .orElse(-1.0);
 
         return (float) (Math.round(avg * 100.0) / 100.0);
     }

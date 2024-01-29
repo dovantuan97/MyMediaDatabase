@@ -20,7 +20,6 @@ h1 {
 a {
     color: #66b2ff;
     text-decoration: none;
-    margin-right: 0.95rem;
 }
 
 a:hover {
@@ -41,8 +40,12 @@ p {
     box-shadow: 0 0 0.63rem rgba(0, 0, 0, 0.2);
 }
 
-select, input {
+.form select, input {
     padding: 0.5rem;
+}
+
+label {
+    max-width: 9.6rem;
 }
 
 .form button {

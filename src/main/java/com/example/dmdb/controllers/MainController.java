@@ -156,6 +156,7 @@ public class MainController {
         model.addAttribute("mediaTypeOptions", MediaType.values());
         model.addAttribute("statusOptions", Status.values());
         model.addAttribute("countryOfOriginOptions", CountryOfOrigin.values());
+        model.addAttribute("genreOption", Genre.values());
     }
 
     public User getUser(Principal principal) {

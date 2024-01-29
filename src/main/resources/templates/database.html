@@ -178,32 +178,26 @@
 
     function addCountry(e) {
         const form = document.querySelector("#form");
-        let original, addButton, maxCount
+        let original, addButton, maxCount;
 
-        if (e.id === "addCountry" ) {
+        if (e.id === "addCountry") {
             original = document.querySelector("#countryLabel");
             addButton = document.querySelector("#addCountry");
             maxCount = 2;
+            countryCounter++;
         } else {
             original = document.querySelector("#genreLabel");
             addButton = document.querySelector("#addGenre");
             maxCount = 3;
+            genreCounter++;
         }
 
         if ((e.id === "addCountry" && countryCounter <= maxCount) || (e.id === "addGenre" && genreCounter <= maxCount)) {
             let copy = original.cloneNode(true);
             form.insertBefore(copy, addButton);
 
-            if (e.id === "addCountry") {
-                countryCounter++;
-                if (countryCounter == maxCount) {
-                    addButton.remove();
-                }
-            } else {
-                genreCounter++;
-                if (genreCounter == maxCount) {
-                    addButton.remove();
-                }
+            if (countryCounter == maxCount || genreCounter == maxCount) {
+                addButton.remove();
             }
         }
     }

@@ -46,7 +46,7 @@
         <label id="genreLabel">
             <select name="genres">
                 <option selected disabled>GENRE</option>
-                <option th:each="genre : ${genreOption}" th:text="${genre}"></option>
+                <option th:each="genre : ${genreOption}" th:text="${#strings.replace(genre.toString(), '_', ' ')}"></option>
             </select>
         </label>
         <a id="addGenre" onclick="addCountry(this)">+</a>

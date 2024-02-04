@@ -33,13 +33,6 @@ public class MainController {
     private final UserService userService;
     private final MyEntryService myEntryService;
 
-    @PostMapping("/medias/create")
-    public String createNewMedia(Media media) {
-        mediaService.save(media);
-
-        return "redirect:/medias";
-    }
-
     @GetMapping("/medias")
     public String showDatabase(Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));

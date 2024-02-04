@@ -20,9 +20,9 @@
             <th>JOINED</th>
         </tr>
 
-        <tr th:each="user : ${users}" th:object="${user}">
+        <tr th:unless="${#lists.isEmpty(users)}" th:each="user : ${users}" th:object="${user}">
             <td>
-                <a th:text="*{username}"></a>
+                <a th:href="|/users/*{id}|" th:text="*{username}"></a>
             </td>
             <td>
                 <p th:text="*{myEntries.size()}"></p>
@@ -40,6 +40,7 @@
             </td>
         </tr>
     </table>
+    <p th:if="${#lists.isEmpty(users)}" id="empty">Lonely! I am so lonely!</p>
 </div>
 
 </body>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.getUsername()}"></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1><a href="/" th:text="|${user.getUsername()}'s List|"></a></h1>
+
+<div th:include="fragments :: menu" class="menu"></div>
+
+<div class="info">
+    <h2 th:text="${user.getUsername()}"></h2>
+</div>
+
+<div class="table">
+    <table>
+        <tr>
+            <th></th>
+            <th>TITLE</th>
+            <th th:text="|${user.getUsername()}'S SCORE|"></th>
+            <th>GLOBAL SCORE</th>
+            <th>TYPE</th>
+            <th>YEAR</th>
+            <th>EPISODES</th>
+            <th>COUNTRY OF ORIGIN</th>
+            <th>GENRE</th>
+        </tr>
+
+        <tr th:if="${not #lists.isEmpty(user.myEntries)}" th:each="entry : ${user.myEntries}" th:object="${entry}">
+            <td>
+                <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
+            </td>
+            <td>
+                <a th:href="|/medias/*{media.id}|" th:text="*{media.title}"></a>
+            </td>
+            <td>
+                <p th:if="*{rating}" th:text="|&#11088; *{rating}|"></p>
+                <p th:unless="*{rating}" th:text="TBA"></p>
+            </td>
+            <td>
+                <p th:unless="*{media.getRating() == -1.0}" th:text="|&#11088; *{media.getRating()}|"></p>
+                <p th:if="*{media.getRating() == -1.0}">TBA</p>
+            </td>
+            <td>
+                <a th:href="|/entries/filterType/*{media.mediaType}|" th:text="*{#strings.replace(media.mediaType.toString(), '_', ' ')}"></a>
+            </td>
+            <td>
+                <a th:href="|/entries/filterYear/*{media.releaseYear}|" th:text="*{media.releaseYear}"></a>
+            </td>
+            <td>
+                <p th:text="*{media.getEpisodes()}"></p>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="country : *{media.countriesOfOrigin}">
+                        <a th:href="|/entries/filterCountry/${country}|"
+                           th:text="${country}"></a>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="genre : *{media.genres}">
+                        <a th:href="|/entries/filterGenre/${genre}|"
+                           th:text="${#strings.replace(genre.toString(), '_', ' ')}"></a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <p th:if="${#lists.isEmpty(user.myEntries)}" id="empty">Lonely! I am so lonely!</p>
+</div>
+
+</body>
+</html>

@@ -12,9 +12,9 @@ img {
 }
 
 h1 {
-    color: #fff;
     text-align: center;
     margin-top: 1.25rem;
+    font-size: 3.5rem;
 }
 
 a {
@@ -34,8 +34,8 @@ p {
 .form {
     background-color: #333;
     color: #fff;
-    margin: 1.25rem 4rem;
-    padding: 0.94rem;
+    margin: 1.25rem 10rem;
+    padding: 1rem;
     border-radius: 0.3rem;
     box-shadow: 0 0 0.63rem rgba(0, 0, 0, 0.2);
 }
@@ -58,7 +58,7 @@ p {
 }
 
 .table {
-    margin: 1.25rem 4rem;
+    margin: 1.25rem 10rem;
     box-shadow: 0 0 0.63rem rgba(0, 0, 0, 0.2);
 }
 
@@ -73,10 +73,15 @@ table {
 .table img {
     height: 10rem;
     width: auto;
+    margin-left: 1rem;
+}
+
+.table a, p {
+    margin-left: 1.5rem;
 }
 
 th, td {
-    padding: 0.5rem;
+    padding-block: 0.5rem;
     text-align: left;
     border-bottom: 0.06rem solid #555;
     max-width: 10rem;
@@ -91,15 +96,16 @@ th {
     display: flex;
     justify-content: space-evenly;
     background-color: #333;
-    padding: 0.94rem;
+    padding: 1rem;
     border-radius: 0.3rem;
     box-shadow: 0 0 0.63rem rgba(0, 0, 0, 0.2);
-    margin: 1.25rem 4rem;
+    margin: 1.25rem 10rem;
 }
 
 .menu a {
     color: #66b2ff;
     text-decoration: none;
+    font-size: 1.5rem;
 }
 
 .menu a:hover {
@@ -182,6 +188,7 @@ th {
     text-align: center;
 }
 
+
 #inputs {
     display: flex;
     justify-content: center;
@@ -192,10 +199,21 @@ th {
     justify-content: center;
 }
 
+.info {
+    background-color: #333;
+    border-radius: 0.3rem;
+    box-shadow: 0 0 0.63rem rgba(0, 0, 0, 0.2);
+    margin: 1.25rem 10rem;
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
 @media only screen and (max-width: 37.5rem) {

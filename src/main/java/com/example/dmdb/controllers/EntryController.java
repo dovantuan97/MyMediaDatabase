@@ -34,11 +34,6 @@ public class EntryController {
         return "mainPage";
     }
 
-    @GetMapping("/entries/random")
-    public String getRandom(Principal principal) {
-        return "redirect:/medias/" + mediaService.getRandomMedia(getUser(principal));
-    }
-
     @PostMapping("/entry/add")
     public String addToList(Principal principal, Long mediaId, Status status, Float rating) {
         entryService.addToList(getUser(principal), getMedia(mediaId), status, rating);

@@ -1,5 +1,6 @@
 package com.example.dmdb.users;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,5 +43,9 @@ public class UserService implements UserDetailsService {
 
     public List<User> findOtherUsers(User user) {
         return repo.findAllByIdNotOrderByUsername(user.getId());
+    }
+
+    public User findById(Long id) {
+        return repo.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

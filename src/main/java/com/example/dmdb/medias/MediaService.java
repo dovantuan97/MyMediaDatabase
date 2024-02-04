@@ -7,6 +7,7 @@ import com.example.dmdb.enums.Status;
 import com.example.dmdb.users.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -21,7 +22,9 @@ public class MediaService {
     }
 
     public List<Media> findAll() {
-        return repo.findAll();
+        return repo.findAll().stream()
+                .sorted(Comparator.comparing(Media::getTitle))
+                .toList();
     }
 
     public void save(Media media) {
@@ -57,8 +60,9 @@ public class MediaService {
     public String setImgSource(Media media) {
        return media.getTitle()
                .toLowerCase()
-               .replace(" ", "_")
-               .replace("'", "");
+               .replaceAll(" ", "_")
+               .replaceAll("\\*", "o")
+               .replaceAll("[.'!\"]", "");
     }
 
     public List<Media> findByGenre(Genre genre) {

@@ -42,7 +42,6 @@
             <th></th>
             <th>Name</th>
             <th>Role</th>
-            <th></th>
         </tr>
         <tr th:each="role : ${roles}" th:object="${role}">
             <td>
@@ -51,8 +50,9 @@
             <td>
                 <a th:href="|/actors/*{actor.id}|" th:text="*{actor.name}"></a>
             </td>
-            <td th:text="*{roleType}"></td>
-            <td></td>
+            <td>
+                <p th:text="*{roleType}"></p>
+            </td>
         </tr>
     </table>
 </div>

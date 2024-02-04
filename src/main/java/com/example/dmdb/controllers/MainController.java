@@ -100,7 +100,7 @@ public class MainController {
             List<Role> roles = media.getRoles().stream()
                     .sorted(Comparator.comparing(Role::getRoleType)
                             .thenComparing(r -> r.getActor().getName()))
-                            .toList();
+                    .toList();
             model.addAttribute("media", media);
             model.addAttribute("roles", roles);
             model.addAttribute("roleTypes", RoleType.values());

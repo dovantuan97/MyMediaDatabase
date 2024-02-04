@@ -35,9 +35,15 @@
             <td>
                 <a th:href="|/medias/*{media.id}|" th:text="*{media.title}"></a>
             </td>
-            <td th:text="*{media.releaseYear}"></td>
-            <td th:text="*{#strings.replace(media.mediaType.toString(), '_', ' ')}"></td>
-            <td th:text="*{roleType}"></td>
+            <td>
+                <p th:text="*{media.releaseYear}"></p>
+            </td>
+            <td>
+                <p th:text="*{#strings.replace(media.mediaType.toString(), '_', ' ')}"></p>
+            </td>
+            <td>
+                <p th:text="*{roleType}"></p>
+            </td>
         </tr>
     </table>
 </div>

@@ -16,8 +16,4 @@ public class RoleService {
     public void save(Role role) {
         repo.save(role);
     }
-
-    public Optional<Role> findByMediaId(Long mediaId) {
-        return repo.findByMediaId(mediaId);
-    }
 }

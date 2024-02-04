@@ -1,9 +1,11 @@
 package com.example.dmdb.users;
 
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface UserRepo extends ListCrudRepository<User, Long> {
+public interface UserRepo extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
+    List<User> findAllByIdNotOrderByUsername(Long id);
 }

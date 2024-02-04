@@ -25,6 +25,7 @@ public class Media {
     private String title;
     private Integer releaseYear;
     private MediaType mediaType;
+    private Integer episodes;
     private String synopsis;
     private String imageSource;
     @ElementCollection(targetClass = CountryOfOrigin.class)

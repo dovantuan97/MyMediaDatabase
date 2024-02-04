@@ -8,11 +8,7 @@
 <body>
 <h1><a href="/">Dolan's Media Database</a></h1>
 
-<div class="menu">
-    <a th:href="|/|">My list</a>
-    <a th:href="|/medias|">Database</a>
-    <a th:href="|/entries/random|">I don't know what to watch</a>
-</div>
+<div th:include="fragments :: menu" class="menu"></div>
 
 <div class="form">
     <form id="form" th:method="post" th:action="|/medias/create|">
@@ -22,16 +18,10 @@
         <label>
             <select name="mediaType">
                 <option selected disabled>TYPE</option>
-                <option th:each="type : ${mediaTypeOptions}" th:text="${type}"></option>
+                <option th:each="type : ${mediaTypeOptions}" th:value="${type}"
+                        th:text="${#strings.replace(type.toString(), '_', ' ')}"></option>
             </select>
         </label>
-        <label id="countryLabel">
-            <select name="countriesOfOrigin">
-                <option selected disabled>COUNTRY OF ORIGIN</option>
-                <option th:each="country : ${countryOfOriginOptions}" th:text="${country}"></option>
-            </select>
-        </label>
-        <a id="addCountry" onclick="addCountry(this)">+</a>
         <label>
             <select name="releaseYear">
                 <option selected disabled>YEAR</option>
@@ -43,10 +33,21 @@
                 </script>
             </select>
         </label>
+        <label>
+            <input type="number" name="episodes" required placeholder="# of episodes" min="1" inputmode="numeric">
+        </label>
+        <label id="countryLabel">
+            <select name="countriesOfOrigin">
+                <option selected disabled>COUNTRY OF ORIGIN</option>
+                <option th:each="country : ${countryOfOriginOptions}" th:text="${country}"></option>
+            </select>
+        </label>
+        <a id="addCountry" onclick="addCountry(this)">+</a>
         <label id="genreLabel">
             <select name="genres">
                 <option selected disabled>GENRE</option>
-                <option th:each="genre : ${genreOption}" th:text="${#strings.replace(genre.toString(), '_', ' ')}"></option>
+                <option th:each="genre : ${genreOption}"
+                        th:text="${#strings.replace(genre.toString(), '_', ' ')}"></option>
             </select>
         </label>
         <a id="addGenre" onclick="addCountry(this)">+</a>
@@ -60,25 +61,33 @@
             <th></th>
             <th>TITLE</th>
             <th>SCORE</th>
-            <th>YEAR</th>
-            <th>COUNTRY/IES OF ORIGIN</th>
             <th>TYPE</th>
+            <th>YEAR</th>
+            <th>EPISODES</th>
+            <th>COUNTRY/IES OF ORIGIN</th>
             <th>GENRES</th>
             <th></th>
         </tr>
         <tr th:each="media : ${medias}" th:object="${media}">
             <td>
-                <img th:src="|/img/medias/*{imageSource}.jpg|" th:alt="|*{title} img|">
+                <img th:src="|/img/medias/*{imageSource}.jpg|" th:alt="*{title}">
             </td>
             <td>
                 <a th:href="|/medias/*{id}|" th:text="*{title}"></a>
             </td>
             <td>
                 <p th:unless="*{getRating() == -1.0}" th:text="|&#11088; *{getRating()}|"></p>
-                <p th:if="*{getRating() == -1.0}">N/a</p>
+                <p th:if="*{getRating() == -1.0}">TBA</p>
+            </td>
+            <td>
+                <a th:href="|/medias/filterType/*{mediaType}|"
+                   th:text="*{#strings.replace(mediaType.toString(), '_', ' ')}"></a>
             </td>
             <td>
                 <a th:href="|/medias/filterYear/*{releaseYear}|" th:text="*{releaseYear}"></a>
+            </td>
+            <td>
+                <p th:text="*{episodes}"></p>
             </td>
             <td>
                 <ul>
@@ -87,9 +96,6 @@
                            th:text="${country}"></a>
                     </li>
                 </ul>
-            </td>
-            <td>
-                <a th:href="|/medias/filterType/*{mediaType}|" th:text="*{mediaType}"></a>
             </td>
             <td>
                 <ul>
@@ -120,9 +126,8 @@
                 <div class="inputs">
                     <label>
                         <select name="status">
-                            <option th:each="status : ${statusOptions}"
-                                    th:text="${#strings.replace(status.toString(), '_', ' ')}"
-                                    th:value="${status}">
+                            <option th:each="status : ${statusOptions}" th:value="${status}"
+                                    th:text="${#strings.replace(status.toString(), '_', ' ')}">
                             </option>
                         </select>
                     </label>
@@ -183,7 +188,7 @@
         if (e.id === "addCountry") {
             original = document.querySelector("#countryLabel");
             addButton = document.querySelector("#addCountry");
-            maxCount = 2;
+            maxCount = 1;
             countryCounter++;
         } else {
             original = document.querySelector("#genreLabel");

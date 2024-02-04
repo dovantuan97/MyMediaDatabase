@@ -8,11 +8,7 @@
 <body>
 <h1><a href="/">Dolan's Media Database</a></h1>
 
-<div class="menu">
-    <a th:href="|/|">My list</a>
-    <a th:href="|/medias|">Database</a>
-    <a th:href="|/entries/random|">I don't know what to watch</a>
-</div>
+<div th:include="fragments :: menu" class="menu"></div>
 
 <h2 th:text="${actor.name}"></h2>
 <img th:src="|/img/actors/${actor.imageSource}.jpg|" th:alt="|${actor.name} img|">

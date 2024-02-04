@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,5 +38,9 @@ public class UserService implements UserDetailsService {
     public void createAndSave(String username, String password) {
         User user = new User(username,password);
         repo.save(user);
+    }
+
+    public List<User> findOtherUsers(User user) {
+        return repo.findAllByIdNotOrderByUsername(user.getId());
     }
 }

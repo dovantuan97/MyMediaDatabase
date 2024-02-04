@@ -8,23 +8,23 @@
 <body>
 <h1><a href="/">My List</a></h1>
 
-<div class="menu">
-<a th:href="|/|">My list</a>
-<a th:href="|/medias|">Database</a>
-<a th:href="|/entries/random|">I don't know what to watch</a>
-</div>
+<div th:include="fragments :: menu" class="menu"></div>
 
 <div class="table">
     <table>
         <tr>
             <th></th>
             <th>TITLE</th>
-            <th>YEAR</th>
-            <th>COUNTRY OF ORIGIN</th>
+            <th>MY SCORE</th>
+            <th>GLOBAL SCORE</th>
             <th>TYPE</th>
+            <th>YEAR</th>
+            <th>EPISODES</th>
+            <th>COUNTRY OF ORIGIN</th>
             <th>GENRE</th>
             <th>STATUS</th>
         </tr>
+
         <tr th:if="${not #lists.isEmpty(entries)}" th:each="entry : ${entries}" th:object="${entry}">
             <td>
                 <img th:src="|/img/medias/*{media.imageSource}.jpg|" th:alt="|*{media.title} img|">
@@ -33,7 +33,21 @@
                 <a th:href="|/medias/*{media.id}|" th:text="*{media.title}"></a>
             </td>
             <td>
+                <p th:if="*{rating}" th:text="|&#11088; *{rating}|"></p>
+                <p th:unless="*{rating}" th:text="TBA"></p>
+            </td>
+            <td>
+                <p th:unless="*{media.getRating() == -1.0}" th:text="|&#11088; *{media.getRating()}|"></p>
+                <p th:if="*{media.getRating() == -1.0}">TBA</p>
+            </td>
+            <td>
+                <a th:href="|/entries/filterType/*{media.mediaType}|" th:text="*{#strings.replace(media.mediaType.toString(), '_', ' ')}"></a>
+            </td>
+            <td>
                 <a th:href="|/entries/filterYear/*{media.releaseYear}|" th:text="*{media.releaseYear}"></a>
+            </td>
+            <td>
+                <p th:text="*{media.getEpisodes()}"></p>
             </td>
             <td>
                 <ul>
@@ -44,12 +58,9 @@
                 </ul>
             </td>
             <td>
-                <a th:href="|/entries/filterType/*{media.mediaType}|" th:text="*{media.mediaType}"></a>
-            </td>
-            <td>
                 <ul>
                     <li th:each="genre : *{media.genres}">
-                        <a th:href="|/medias/filterGenre/${genre}|"
+                        <a th:href="|/entries/filterGenre/${genre}|"
                            th:text="${#strings.replace(genre.toString(), '_', ' ')}"></a>
                     </li>
                 </ul>

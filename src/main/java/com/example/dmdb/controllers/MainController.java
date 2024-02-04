@@ -43,6 +43,7 @@ public class MainController {
     @GetMapping("/medias")
     public String showDatabase(Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findAll());
         addOptions(model);
@@ -53,6 +54,7 @@ public class MainController {
     @GetMapping("/medias/filterYear/{year}")
     public String filterDatabaseYear(@PathVariable Integer year, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByYear(year));
         addOptions(model);
@@ -63,6 +65,7 @@ public class MainController {
     @GetMapping("/medias/filterCountry/{countryOfOrigin}")
     public String filterDatabaseCountry(@PathVariable CountryOfOrigin countryOfOrigin, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByCountry(countryOfOrigin));
         addOptions(model);
@@ -73,6 +76,7 @@ public class MainController {
     @GetMapping("/medias/filterType/{mediaType}")
     public String filterDatabaseType(@PathVariable MediaType mediaType, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByType(mediaType));
         addOptions(model);
@@ -83,6 +87,7 @@ public class MainController {
     @GetMapping("/medias/filterGenre/{genre}")
     public String filterDatabaseGenre(@PathVariable Genre genre, Model model, Principal principal) {
         List<Long> myEntries= myEntryService.getMyEntriesId(getUser(principal));
+
         model.addAttribute("myEntries", myEntries);
         model.addAttribute("medias", mediaService.findByGenre(genre));
         addOptions(model);
@@ -93,6 +98,7 @@ public class MainController {
     @GetMapping("/medias/{mediaId}")
     public String showMediaInfo(@PathVariable Long mediaId, Model model) {
         Optional<Media> optMedia = mediaService.findById(mediaId);
+
         if(optMedia.isEmpty()) {
            throw new RuntimeException("Media not found");
         }
@@ -145,6 +151,13 @@ public class MainController {
         }
 
         return "actorInfo";
+    }
+
+    @GetMapping("/users")
+    public String showUsers(Model model, Principal principal) {
+        model.addAttribute("users", userService.findOtherUsers(getUser(principal)));
+
+        return "users";
     }
 
     @GetMapping("/test")

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1><a href="/">My List</a></h1>
+
+<div th:include="fragments :: menu" class="menu"></div>
+
+<div class="table">
+    <table>
+        <tr>
+            <th>USERNAME</th>
+            <th>ENTRIES</th>
+            <th>FAVOURITE MOVIE</th>
+            <th>FAVOURITE SERIES</th>
+            <th>JOINED</th>
+        </tr>
+
+        <tr th:each="user : ${users}" th:object="${user}">
+            <td>
+                <a th:text="*{username}"></a>
+            </td>
+            <td>
+                <p th:text="*{myEntries.size()}"></p>
+            </td>
+            <td>
+                <p th:if="*{favouriteMovie}" th:text="*{favouriteMovie.title}"></p>
+                <p th:unless="*{favouriteMovie}">TBA</p>
+            </td>
+            <td>
+                <p th:if="*{favouriteSeries}" th:text="*{favouriteSeries.title}"></p>
+                <p th:unless="*{favouriteSeries}">TBA</p>
+            </td>
+            <td>
+                <p th:text="*{createdAt}"></p>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
